@@ -13,7 +13,7 @@ import java.util.Scanner;
  */
 public class Factorizer {
     public static void main(String[] args) {
-        int factorMe = 3;
+        int factorMe = 1;
         Factor(factorMe);
     }
     
@@ -45,7 +45,6 @@ public class Factorizer {
     }
     
 }
-            
 
 
     

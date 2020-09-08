@@ -19,21 +19,31 @@ public class InterestCalculator {
     public static void IntrestOne() {
         Scanner sc = new Scanner(System.in);
         System.out.println("How much do you want to invest?");
-        Float currentBalance = sc.nextFloat();
-        System.out.println(currentBalance);
+        double currentBalance = sc.nextDouble();
+        System.out.println(currentBalance); 
         
         System.out.println("How many years are investing?");
-        Float years = sc.nextFloat();
+        double years = sc.nextDouble();
         System.out.println(years);
         
         System.out.println("What is the annual interest rate % growth?");
-        Float growthRate = sc.nextFloat();
+        double growthRate = sc.nextDouble();
         System.out.println(growthRate);
         
-        Float answer = (currentBalance * years * growthRate) / 100;
-        System.out.println(answer);
         
-        // ((10 / 4) * 2) 
+        double total = currentBalance * (1 + (growthRate / 100));
+        System.out.println(total);
+        
+        System.out.println("Calculating...\n" + "Year 1:");
+        System.out.println("Began with: " + currentBalance);
+        System.out.println("Earned: " + (growthRate));
+        System.out.println("Ended with: " + total);
+        
+        System.out.println("Year 2: ");
+        System.out.println("Began with: " + total);
+        System.out.println("Earned: " + growthRate * (growthRate * 2));
+        System.out.println("Ended with: " + total + growthRate);
+                
 
     }
 }
