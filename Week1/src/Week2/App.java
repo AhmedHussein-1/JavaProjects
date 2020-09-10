@@ -20,5 +20,10 @@ public class App {
         
         Dog anotherDog = new Dog("Buster", 23.5);
         
+        
+        Square sc = new Square();
+        sc.getArea(2, 2);
+        sc.getPerimeter(2);
+        
     }
 }
