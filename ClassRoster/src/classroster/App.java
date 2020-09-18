@@ -22,8 +22,8 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        UserIO myIo = new UserIOConsoleImpl();
-        ClassRosterView myView = new ClassRosterView(myIo);
+        UserIO myIO = new UserIOConsoleImpl();
+        ClassRosterView myView = new ClassRosterView(myIO);
         ClassRosterDao myDao = new ClassRosterDaoFileImpl();
         ClassRosterController controller
                 = new ClassRosterController(myDao, myView);
