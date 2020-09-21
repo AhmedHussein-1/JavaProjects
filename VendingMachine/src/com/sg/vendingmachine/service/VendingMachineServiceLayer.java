@@ -5,10 +5,15 @@
  */
 package com.sg.vendingmachine.service;
 
+import com.sg.vendingmachine.dto.Snack;
+import java.math.BigDecimal;
+
 /**
  *
  * @author Maxka
  */
 public interface VendingMachineServiceLayer {
     
+    public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice);
+    public Snack getSnack(String name);
 }

@@ -1,4 +1,4 @@
-KitKat::1.25::5
-Twizzlers::2.75::8
-M&M::3.50::7
-Reese's::1.75::3
+kitkat::1.25::5
+twizzlers::2.75::8
+gum::3.50::7
+peanut::1.75::3

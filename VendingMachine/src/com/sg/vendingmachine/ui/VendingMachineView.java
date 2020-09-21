@@ -6,6 +6,7 @@
 package com.sg.vendingmachine.ui;
 
 import com.sg.vendingmachine.dto.Snack;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,22 +27,23 @@ public class VendingMachineView {
                 selectedSnack.getSnackName(),
                 selectedSnack.getSnackPrice(),
                 selectedSnack.getInventory());
-            io.print(snackInfo);
-                
+            System.out.println(snackInfo);     
         }
-        io.readString("Enter Snack Name: ");
-    }
-    public String getSnackName() {
-        return io.readString("Please Select from the above: ");
-    }
+   
+    } 
     
-    public String getUserSnack() {
+    public String getSnackName() {
         return io.readString("Please choose a snack: ");
     }
     
     public double getUserCost(){
-       return io.readDouble("lease enter your change: ");
+       return io.readDouble("Please enter your change: ");
     }
+    
+    public void printChange(BigDecimal change) {
+        io.print(change.toString());
+    }
+    
     public void displayAllSnacksBanner() {
         io.print("=== Display all snacks ===");
     }

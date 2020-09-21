@@ -8,9 +8,12 @@ package com.sg.vendingmachine.controller;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.Snack;
+import com.sg.vendingmachine.service.VendingMachineServiceLayer;
+import com.sg.vendingmachine.service.VendingMachineServiceLayerImpl;
 import com.sg.vendingmachine.ui.UserIO;
 import com.sg.vendingmachine.ui.UserIOConsoleImpl;
 import com.sg.vendingmachine.ui.VendingMachineView;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -18,6 +21,8 @@ import java.util.List;
  * @author Maxka
  */
 public class VendingMachineController {
+    // You need this injected 
+    VendingMachineServiceLayer service = new VendingMachineServiceLayerImpl();
 
     public VendingMachineController(VendingMachineDao dao, VendingMachineView view) {
         this.dao = dao;
@@ -32,6 +37,7 @@ public class VendingMachineController {
         boolean keepGoing = true;
         int menuSelection = 0;
         listSnacks();
+        getUserCost();
         exitMessage();
     }
 
@@ -47,6 +53,21 @@ public class VendingMachineController {
 
     private void exitMessage() {
         view.displayExitBanner();
+    }
+
+    private String getSnackName() {
+        String theSnack = view.getSnackName();
+        return theSnack;
+    }
+    
+    private void getUserCost() {
+        String snackName = getSnackName();
+        Double userCost = view.getUserCost();
+        BigDecimal userCostBD = new BigDecimal(userCost.toString());
+        Snack snack = service.getSnack(snackName);
+        BigDecimal snackCost = snack.getSnackPrice();
+        BigDecimal change = service.priceChecker(userCostBD, snackCost);
+        view.printChange(change);
     }
 
 }

@@ -7,11 +7,9 @@ package statecapitals2;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  *
