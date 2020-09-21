@@ -20,8 +20,16 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     
     @Override
     public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        if (userInput.compareTo(actualPrice) == 1) {
+            return userInput.subtract(actualPrice);
+        } else if(userInput.compareTo(actualPrice) == -1) {
+            return (actualPrice.subtract(userInput)).abs();
+        } else {
+            BigDecimal zero = new BigDecimal("0");
+            return zero;
+        }
+    } 
+    
 
     @Override
     public Snack getSnack(String name) {

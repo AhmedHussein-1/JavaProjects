@@ -16,4 +16,5 @@ public interface VendingMachineServiceLayer {
     
     public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice);
     public Snack getSnack(String name);
+    //coin exchange
 }
