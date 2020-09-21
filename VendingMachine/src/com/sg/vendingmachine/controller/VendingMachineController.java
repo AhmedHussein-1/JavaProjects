@@ -33,12 +33,19 @@ public class VendingMachineController {
     private VendingMachineView view;
     private UserIO io = new UserIOConsoleImpl();
 
-    public void run() throws VendingMachineDaoException {
+    public void run() {
         boolean keepGoing = true;
         int menuSelection = 0;
-        listSnacks();
-        getUserCost();
-        exitMessage();
+        
+        try {
+            listSnacks();
+            getUserCost();
+            exitMessage();
+            unknownCommand();
+        } catch(VendingMachineDaoException e) {
+            
+        }
+        
     }
 
     private void listSnacks() throws VendingMachineDaoException {
@@ -60,14 +67,17 @@ public class VendingMachineController {
         return theSnack;
     }
     
-    private void getUserCost() {
+    private void getUserCost() throws VendingMachineDaoException{
         String snackName = getSnackName();
         Double userCost = view.getUserCost();
         BigDecimal userCostBD = new BigDecimal(userCost.toString());
         Snack snack = service.getSnack(snackName);
         BigDecimal snackCost = snack.getSnackPrice();
         BigDecimal change = service.priceChecker(userCostBD, snackCost);
-        view.printChange(change);
+        String coins = service.coinExchange(change);
+        view.printCoins(coins);
     }
+    
+    
 
 }

@@ -6,6 +6,7 @@
 package com.sg.vendingmachine.service;
 
 import com.sg.vendingmachine.dao.VendingMachineDao;
+import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dao.VendingMachineDaoFileImpl;
 import com.sg.vendingmachine.dto.Snack;
 import java.math.BigDecimal;
@@ -29,12 +30,17 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
             return zero;
         }
     } 
-    
+
 
     @Override
-    public Snack getSnack(String name) {
+    public Snack getSnack(String name) throws VendingMachineDaoException{
         Snack theSnack = dao.getSnack(name);
         return theSnack;
+    }
+
+    @Override
+    public String coinExchange(BigDecimal change) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

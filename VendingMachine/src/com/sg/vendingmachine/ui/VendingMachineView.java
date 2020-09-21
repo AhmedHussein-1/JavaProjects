@@ -40,8 +40,8 @@ public class VendingMachineView {
        return io.readDouble("Please enter your change: ");
     }
     
-    public void printChange(BigDecimal change) {
-        io.print(change.toString());
+    public void printCoins(String coins) {
+        io.print(coins);
     }
     
     public void displayAllSnacksBanner() {

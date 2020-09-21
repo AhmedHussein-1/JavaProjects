@@ -23,11 +23,12 @@ import java.util.Scanner;
  *
  * @author Maxka
  */
-public class VendingMachineDaoFileImpl implements VendingMachineDao{
+public class VendingMachineDaoFileImpl implements VendingMachineDao {
+
     public static final String SNACK_FILE = "Inventory.txt";
     public static final String DELIMITER = "::";
     private Map<String, Snack> snacks = new HashMap<>();
-    
+
     @Override
     public List<Snack> getAllSnacks() throws VendingMachineDaoException {
         loadSnack();
@@ -35,59 +36,62 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao{
     }
 
     @Override
-    public Snack getSnack(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Snack getSnack(String name) throws VendingMachineDaoException {
+        loadSnack();
+        Snack snack = snacks.get(name);
+        return snack;
+
     }
 
     @Override
     public Snack removeSnack(String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     private void loadSnack() throws VendingMachineDaoException {
         Scanner sc;
-        
+
         try {
             sc = new Scanner(new BufferedReader(new FileReader(SNACK_FILE)));
-        }   catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new VendingMachineDaoException(
-            "Could not load snack data into memory", e);
+                    "Could not load snack data into memory", e);
         }
-        
+
         String currentLine;
         Snack selectedSnack;
-        
+
         while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             selectedSnack = unmarshallSnack(currentLine);
-            
+
             snacks.put(selectedSnack.getSnackName(), selectedSnack);
         }
         sc.close();
     }
+
     private String marshallSnack(Snack aSnack) {
         String snackAsText = aSnack.getSnackName() + DELIMITER;
         snackAsText += aSnack.getSnackPrice() + DELIMITER;
         snackAsText += aSnack.getInventory() + DELIMITER;
         return snackAsText;
     }
-    
-    private Snack unmarshallSnack(String snackAsText)  {
+
+    private Snack unmarshallSnack(String snackAsText) {
         String[] snackTokens = snackAsText.split(DELIMITER);
         String snackName = snackTokens[0];
         Snack snackFromFile = new Snack(snackName);
         snackFromFile.setSnackPrice(new BigDecimal(snackTokens[1]));
         snackFromFile.setInventory(Integer.parseInt(snackTokens[2]));
         return snackFromFile;
-    } 
-    
+    }
+
     private void writeSnack() throws VendingMachineDaoException {
         PrintWriter out;
-        
+
         try {
             out = new PrintWriter(new FileWriter(SNACK_FILE));
-        }
-        catch(IOException e) {
+        } catch (IOException e) {
             throw new VendingMachineDaoException("could not save snack data", e);
         }
         String snackAsText;
@@ -98,7 +102,6 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao{
             out.flush();
         }
         out.close();
-    }   
-
+    }
 
 }
