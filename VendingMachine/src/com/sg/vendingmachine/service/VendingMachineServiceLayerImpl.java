@@ -10,37 +10,76 @@ import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dao.VendingMachineDaoFileImpl;
 import com.sg.vendingmachine.dto.Snack;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Maxka
  */
 public class VendingMachineServiceLayerImpl implements VendingMachineServiceLayer {
+
     // You need this injected 
     VendingMachineDao dao = new VendingMachineDaoFileImpl();
-    
+
     @Override
     public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice) {
-        if (userInput.compareTo(actualPrice) == 1) {
+        if (userInput.compareTo(actualPrice) == 1) { //userInput > actualPrice
             return userInput.subtract(actualPrice);
-        } else if(userInput.compareTo(actualPrice) == -1) {
+        } else if (userInput.compareTo(actualPrice) == -1) { //userInput > actualPrice
             return (actualPrice.subtract(userInput)).abs();
-        } else {
+        } else { //Both are equal
             BigDecimal zero = new BigDecimal("0");
             return zero;
         }
-    } 
-
+    }
 
     @Override
-    public Snack getSnack(String name) throws VendingMachineDaoException{
+    public Snack getSnack(String name) throws VendingMachineDaoException {
         Snack theSnack = dao.getSnack(name);
         return theSnack;
     }
 
     @Override
-    public String coinExchange(BigDecimal change) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Integer> coinExchange(BigDecimal change) {
+        int coins = 0;
+        BigDecimal quarter = new BigDecimal("0.25");
+        BigDecimal dime = new BigDecimal("0.10");
+        BigDecimal nickle = new BigDecimal("0.05");
+        BigDecimal penny = new BigDecimal("0.01");
+
+        
+        int quarterCounter = 0;
+        int dimeCounter = 0;
+        int nickleCounter = 0;
+        int pennyCounter = 0;
+        
+        List<Integer> aCoin = new ArrayList<Integer>();
+
+        while (change.compareTo(new BigDecimal("0.00")) == 1) {
+
+            if (change.compareTo(quarter) == 1 || change.compareTo(quarter) == 0) {
+                change = change.subtract(quarter);
+                quarterCounter++;
+            } else if (change.compareTo(dime) == 1 || change.compareTo(dime) == 0) {
+                change = change.subtract(dime);
+                dimeCounter++;
+            } else if (change.compareTo(nickle) == 1 || change.compareTo(nickle) == 0) {
+                change = change.subtract(nickle);
+                nickleCounter++;
+            } else {
+                change = change.subtract(penny);
+                pennyCounter++;
+            }
+
+        }
+        aCoin.add(quarterCounter);
+        aCoin.add(dimeCounter);
+        aCoin.add(nickleCounter);
+        aCoin.add(pennyCounter);
+        
+//        String newCoins = Integer.toString(coins);
+        return aCoin;
     }
-    
+
 }

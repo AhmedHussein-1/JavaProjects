@@ -8,6 +8,7 @@ package com.sg.vendingmachine.service;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.Snack;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  *
@@ -17,6 +18,6 @@ public interface VendingMachineServiceLayer {
     
     public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice);
     public Snack getSnack(String name) throws VendingMachineDaoException;
-    public String coinExchange(BigDecimal change);
+    public List<Integer> coinExchange(BigDecimal change);
 
 }

@@ -40,8 +40,9 @@ public class VendingMachineView {
        return io.readDouble("Please enter your change: ");
     }
     
-    public void printCoins(String coins) {
-        io.print(coins);
+    public void printCoins(List<Integer> coins) {
+        io.print("Quarter(s): " + coins.get(0) + " Dime(s): " + coins.get(1)
+                + " Nickle(s): " + coins.get(2) + " Penny(s)" + coins.get(3));
     }
     
     public void displayAllSnacksBanner() {

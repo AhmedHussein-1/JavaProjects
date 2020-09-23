@@ -41,7 +41,7 @@ public class VendingMachineController {
             listSnacks();
             getUserCost();
             exitMessage();
-            unknownCommand();
+//            unknownCommand();
         } catch(VendingMachineDaoException e) {
             
         }
@@ -74,7 +74,7 @@ public class VendingMachineController {
         Snack snack = service.getSnack(snackName);
         BigDecimal snackCost = snack.getSnackPrice();
         BigDecimal change = service.priceChecker(userCostBD, snackCost);
-        String coins = service.coinExchange(change);
+        List<Integer> coins = service.coinExchange(change);
         view.printCoins(coins);
     }
     
