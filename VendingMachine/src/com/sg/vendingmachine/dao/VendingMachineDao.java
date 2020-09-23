@@ -16,6 +16,6 @@ public interface VendingMachineDao {
     
     List<Snack> getAllSnacks() throws VendingMachineDaoException;
     Snack getSnack(String name) throws VendingMachineDaoException;
-    Snack removeSnack(String name);
+    Snack removeSnack(String name) throws VendingMachineDaoException;
 
 }

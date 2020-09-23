@@ -45,6 +45,9 @@ public class VendingMachineView {
                 + " Nickle(s): " + coins.get(2) + " Penny(s)" + coins.get(3));
     }
     
+    public void printExceptions(String message) {
+        io.print(message);
+    }
     public void displayAllSnacksBanner() {
         io.print("=== Display all snacks ===");
     }

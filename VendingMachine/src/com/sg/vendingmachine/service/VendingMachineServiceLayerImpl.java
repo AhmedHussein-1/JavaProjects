@@ -23,11 +23,11 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     VendingMachineDao dao = new VendingMachineDaoFileImpl();
 
     @Override
-    public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice) {
+    public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice) throws InsufficientFundsException{
         if (userInput.compareTo(actualPrice) == 1) { //userInput > actualPrice
             return userInput.subtract(actualPrice);
         } else if (userInput.compareTo(actualPrice) == -1) { //userInput > actualPrice
-            return (actualPrice.subtract(userInput)).abs();
+            throw new InsufficientFundsException("Insufficient Funds Please enter the right ammount or more");
         } else { //Both are equal
             BigDecimal zero = new BigDecimal("0");
             return zero;
@@ -54,7 +54,7 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
         int nickleCounter = 0;
         int pennyCounter = 0;
         
-        List<Integer> aCoin = new ArrayList<Integer>();
+        List<Integer> aCoin = new ArrayList<>();
 
         while (change.compareTo(new BigDecimal("0.00")) == 1) {
 

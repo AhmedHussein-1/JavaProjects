@@ -16,8 +16,8 @@ import java.util.List;
  */
 public interface VendingMachineServiceLayer {
     
-    public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice);
+    public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice)  throws InsufficientFundsException;
     public Snack getSnack(String name) throws VendingMachineDaoException;
-    public List<Integer> coinExchange(BigDecimal change);
+    public List<Integer> coinExchange(BigDecimal change) ;
 
 }

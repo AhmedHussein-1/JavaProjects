@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sg.vendingmachine.dao;
+package com.sg.vendingmachine.service;
 
 /**
  *
  * @author Maxka
  */
-public class VendingMachineDaoException extends Exception{
-    
-    public VendingMachineDaoException(String message) {
+public class InsufficientFundsException extends Exception {
+
+    public InsufficientFundsException(String message) {
         super(message);
     }
-    
-    public VendingMachineDaoException(String message, Throwable cause) {
+
+    public InsufficientFundsException(String message, Throwable cause) {
         super(message, cause);
     }
-    
 
 }

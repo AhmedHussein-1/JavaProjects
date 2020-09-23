@@ -8,6 +8,7 @@ package com.sg.vendingmachine.controller;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.Snack;
+import com.sg.vendingmachine.service.InsufficientFundsException;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
 import com.sg.vendingmachine.service.VendingMachineServiceLayerImpl;
 import com.sg.vendingmachine.ui.UserIO;
@@ -31,7 +32,6 @@ public class VendingMachineController {
     
     private VendingMachineDao dao;
     private VendingMachineView view;
-    private UserIO io = new UserIOConsoleImpl();
 
     public void run() {
         boolean keepGoing = true;
@@ -42,8 +42,8 @@ public class VendingMachineController {
             getUserCost();
             exitMessage();
 //            unknownCommand();
-        } catch(VendingMachineDaoException e) {
-            
+        } catch(VendingMachineDaoException | InsufficientFundsException e) {
+            view.printExceptions(e.getMessage());
         }
         
     }
@@ -67,7 +67,7 @@ public class VendingMachineController {
         return theSnack;
     }
     
-    private void getUserCost() throws VendingMachineDaoException{
+    private void getUserCost() throws VendingMachineDaoException, InsufficientFundsException{
         String snackName = getSnackName();
         Double userCost = view.getUserCost();
         BigDecimal userCostBD = new BigDecimal(userCost.toString());
