@@ -39,6 +39,11 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
         Snack theSnack = dao.getSnack(name);
         return theSnack;
     }
+    
+    @Override
+    public Snack removeSnack(String name) throws NoItemInventoryException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     @Override
     public List<Integer> coinExchange(BigDecimal change) {
@@ -81,5 +86,7 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
 //        String newCoins = Integer.toString(coins);
         return aCoin;
     }
+
+    
 
 }

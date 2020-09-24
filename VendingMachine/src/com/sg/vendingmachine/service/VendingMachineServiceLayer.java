@@ -19,5 +19,6 @@ public interface VendingMachineServiceLayer {
     public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice)  throws InsufficientFundsException;
     public Snack getSnack(String name) throws VendingMachineDaoException;
     public List<Integer> coinExchange(BigDecimal change) ;
+    public Snack removeSnack(String name) throws NoItemInventoryException;
 
 }
