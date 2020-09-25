@@ -6,6 +6,7 @@
 package com.sg.vendingmachine.dao;
 
 import com.sg.vendingmachine.dto.Snack;
+import com.sg.vendingmachine.service.NoItemInventoryException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -44,30 +45,29 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     }
 
     @Override
-    public Snack removeSnack(String name) throws VendingMachineDaoException {
-        loadSnack();
-        Snack removeSnack = snacks.remove(name);
+    public Snack removeSnack(String name) throws NoItemInventoryException, VendingMachineDaoException {
+//        loadSnack();
+        Snack removeSnackCount = snacks.get(name);
+        removeSnackCount.setInventory(removeSnackCount.getInventory() - 1);
         writeSnack();
-        return removeSnack;
+        return removeSnackCount;
     }
 
     private void loadSnack() throws VendingMachineDaoException {
         Scanner sc;
-
         try {
-            sc = new Scanner(new BufferedReader(new FileReader(SNACK_FILE)));
+            sc = new Scanner(
+                    new BufferedReader(
+                            new FileReader(SNACK_FILE)));
         } catch (FileNotFoundException e) {
             throw new VendingMachineDaoException(
                     "Could not load snack data into memory", e);
         }
-
         String currentLine;
         Snack selectedSnack;
-
         while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             selectedSnack = unmarshallSnack(currentLine);
-
             snacks.put(selectedSnack.getSnackName(), selectedSnack);
         }
         sc.close();
@@ -95,7 +95,8 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         try {
             out = new PrintWriter(new FileWriter(SNACK_FILE));
         } catch (IOException e) {
-            throw new VendingMachineDaoException("could not save snack data", e);
+            throw new VendingMachineDaoException(
+                    "Counld not save snack data", e);
         }
         String snackAsText;
         List<Snack> snackList = new ArrayList(snacks.values());

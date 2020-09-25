@@ -6,8 +6,12 @@
 package vendingmachine;
 
 import com.sg.vendingmachine.controller.VendingMachineController;
+import com.sg.vendingmachine.dao.VendingMachineAuditDao;
+import com.sg.vendingmachine.dao.VendingMachineAuditDaoFileImpl;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoFileImpl;
+import com.sg.vendingmachine.service.VendingMachineServiceLayer;
+import com.sg.vendingmachine.service.VendingMachineServiceLayerImpl;
 import com.sg.vendingmachine.ui.UserIO;
 import com.sg.vendingmachine.ui.UserIOConsoleImpl;
 import com.sg.vendingmachine.ui.VendingMachineView;
@@ -22,7 +26,9 @@ public class App {
         UserIO myIO = new UserIOConsoleImpl();
         VendingMachineView myView = new VendingMachineView(myIO);
         VendingMachineDao myDao = new VendingMachineDaoFileImpl();
-        VendingMachineController controller = new VendingMachineController(myDao, myView);
+        VendingMachineAuditDao myAuditDao = new VendingMachineAuditDaoFileImpl();
+        VendingMachineServiceLayer myService = new VendingMachineServiceLayerImpl(myDao, myAuditDao);
+        VendingMachineController controller = new VendingMachineController(myService, myView);
         controller.run();
     }
 }

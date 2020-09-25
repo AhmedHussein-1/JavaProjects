@@ -9,8 +9,11 @@ import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.Snack;
 import com.sg.vendingmachine.service.InsufficientFundsException;
+import com.sg.vendingmachine.service.NoItemInventoryException;
 import com.sg.vendingmachine.service.VendingMachineServiceLayer;
 import com.sg.vendingmachine.service.VendingMachineServiceLayerImpl;
+import com.sg.vendingmachine.ui.UserIO;
+import com.sg.vendingmachine.ui.UserIOConsoleImpl;
 import com.sg.vendingmachine.ui.VendingMachineView;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,15 +24,16 @@ import java.util.List;
  */
 public class VendingMachineController {
     // You need this injected 
-    VendingMachineServiceLayer service = new VendingMachineServiceLayerImpl();
 
-    public VendingMachineController(VendingMachineDao dao, VendingMachineView view) {
-        this.dao = dao;
+
+    public VendingMachineController(VendingMachineServiceLayer service, VendingMachineView view) {
+        this.service = service;
         this.view = view;
     }
     
-    private VendingMachineDao dao;
+    private VendingMachineServiceLayer service;
     private VendingMachineView view;
+    private UserIO io = new UserIOConsoleImpl();
 
     public void run() {
         boolean keepGoing = true;
@@ -38,17 +42,19 @@ public class VendingMachineController {
         try {
             listSnacks();
             getUserCost();
+            
             exitMessage();
 //            unknownCommand();
-        } catch(VendingMachineDaoException | InsufficientFundsException e) {
+        } catch(VendingMachineDaoException | InsufficientFundsException | NoItemInventoryException e) {
             view.printExceptions(e.getMessage());
+            
         }
         
     }
 
     private void listSnacks() throws VendingMachineDaoException {
         view.displayAllSnacksBanner();
-        List<Snack> snackList = dao.getAllSnacks();
+        List<Snack> snackList = service.getAllSnacks();
         view.displaySnackList(snackList);
     }
 
@@ -64,8 +70,8 @@ public class VendingMachineController {
         String theSnack = view.getSnackName();
         return theSnack;
     }
-    
-    private void getUserCost() throws VendingMachineDaoException, InsufficientFundsException{
+
+    private void getUserCost() throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException{
         String snackName = getSnackName();
         Double userCost = view.getUserCost();
         BigDecimal userCostBD = new BigDecimal(userCost.toString());
@@ -74,6 +80,7 @@ public class VendingMachineController {
         BigDecimal change = service.priceChecker(userCostBD, snackCost);
         List<Integer> coins = service.coinExchange(change);
         view.printCoins(coins);
+        service.removeSnack(snackName);
     }
     
     

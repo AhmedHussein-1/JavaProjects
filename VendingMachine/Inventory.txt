@@ -1,4 +1,4 @@
-kitkat::1.25::5
-twizzlers::2.75::8
-gum::3.50::7
-peanut::1.75::3
+twizzlers::2.00::8::
+kitkat::1.25::4::
+peanuts::1.75::6::
+gum::3.50::0::

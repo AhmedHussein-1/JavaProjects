@@ -5,6 +5,7 @@
  */
 package com.sg.vendingmachine.service;
 
+import com.sg.vendingmachine.dao.VendingMachineAuditDao;
 import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dao.VendingMachineDaoFileImpl;
@@ -18,10 +19,18 @@ import java.util.List;
  * @author Maxka
  */
 public class VendingMachineServiceLayerImpl implements VendingMachineServiceLayer {
-
+    
+    
+    
     // You need this injected 
-    VendingMachineDao dao = new VendingMachineDaoFileImpl();
-
+    public VendingMachineServiceLayerImpl(VendingMachineDao dao, VendingMachineAuditDao auditDao) {
+        this.dao = dao;
+        this.auditDao = auditDao;
+    }
+    
+    private VendingMachineDao dao; // = new VendingMachineDaoFileImpl();
+    private VendingMachineAuditDao auditDao;
+    
     @Override
     public BigDecimal priceChecker(BigDecimal userInput, BigDecimal actualPrice) throws InsufficientFundsException{
         if (userInput.compareTo(actualPrice) == 1) { //userInput > actualPrice
@@ -41,8 +50,23 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
     }
     
     @Override
-    public Snack removeSnack(String name) throws NoItemInventoryException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Snack> getAllSnacks() throws VendingMachineDaoException {
+        return dao.getAllSnacks();
+    }
+    
+    @Override
+    public Snack removeSnack(String name) throws NoItemInventoryException, VendingMachineDaoException {
+        Snack removeSnack = dao.removeSnack(name);
+        if (removeSnack.getInventory() < 0) {
+            // this makes inventory not go negative.
+            removeSnack.setInventory(1);
+            dao.removeSnack(name);
+            auditDao.writeAuditEntry("Snack " + name + " REMOVED.");
+            throw new NoItemInventoryException("Snack not available");
+        }
+        
+//        auditDao.writeAuditEntry("Snack " + removeSnack.getSnackName() + " Bought and removed.");
+        return removeSnack;
     }
 
     @Override
@@ -86,6 +110,8 @@ public class VendingMachineServiceLayerImpl implements VendingMachineServiceLaye
 //        String newCoins = Integer.toString(coins);
         return aCoin;
     }
+
+    
 
     
 

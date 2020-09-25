@@ -6,6 +6,7 @@
 package com.sg.vendingmachine.dao;
 
 import com.sg.vendingmachine.dto.Snack;
+import com.sg.vendingmachine.service.NoItemInventoryException;
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ public interface VendingMachineDao {
     
     List<Snack> getAllSnacks() throws VendingMachineDaoException;
     Snack getSnack(String name) throws VendingMachineDaoException;
-    Snack removeSnack(String name) throws VendingMachineDaoException;
+    Snack removeSnack(String name) throws VendingMachineDaoException, NoItemInventoryException;
 
 }
