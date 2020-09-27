@@ -22,11 +22,21 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        UserIO myIO = new UserIOConsoleImpl();
-        ClassRosterView myView = new ClassRosterView(myIO);
-        ClassRosterDao myDao = new ClassRosterDaoFileImpl();
-        ClassRosterController controller
-                = new ClassRosterController(myDao, myView);
+        // UserIO myIo = new UserIOConsoleImpl();
+        // ClassRosterView myView = new ClassRosterView(myIo);
+        // ClassRosterDao myDao = new ClassRosterDaoFileImpl();
+        // ClassRosterAuditDao myAuditDao = 
+        //       new ClassRosterAuditDaoFileImpl();
+        // ClassRosterServiceLayer myService = 
+        //       new ClassRosterServiceLayerImpl(myDao, myAuditDao);
+        // ClassRosterController controller = 
+        //       new ClassRosterController(myService, myView);
+        // controller.run();
+ 
+        ApplicationContext ctx = 
+           new ClassPathXmlApplicationContext("applicationContext.xml");
+        ClassRosterController controller = 
+           ctx.getBean("controller", ClassRosterController.class);
         controller.run();
     }
 
