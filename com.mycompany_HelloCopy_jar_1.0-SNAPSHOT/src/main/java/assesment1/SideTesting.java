@@ -20,8 +20,6 @@ public class SideTesting {
         String scanResult = myScan.nextLine();
         int rounds = Integer.parseInt(scanResult);
 
-        
-
     public static int resultCheck(int numRounds) {
         int tied = 0;
         if (theGame() == compGuess(numRounds)) {
