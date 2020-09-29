@@ -26,10 +26,14 @@ import java.util.Scanner;
  */
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
-    public static String SNACK_FILE = "Inventory.txt";
+    public static String SNACK_FILE = "";
     public static final String DELIMITER = "::";
     private Map<String, Snack> snacks = new HashMap<>();
-
+    
+    public VendingMachineDaoFileImpl() {
+        SNACK_FILE = "Inventory.txt";
+    }
+    
     public VendingMachineDaoFileImpl(String textFileCall) {
         SNACK_FILE = textFileCall;
     }

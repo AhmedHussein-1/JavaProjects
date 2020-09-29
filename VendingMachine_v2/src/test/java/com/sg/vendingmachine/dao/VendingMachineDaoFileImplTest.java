@@ -73,7 +73,7 @@ public class VendingMachineDaoFileImplTest {
     }
     
     @Test 
-    public void teestRemoveSnack() throws Exception {
+    public void testRemoveSnack() throws Exception {
         Snack testSnack = new Snack("peanuts", new BigDecimal("1.75"), 6);
         
         Snack removeSnack = testDao.removeSnack("peanuts");
