@@ -25,17 +25,35 @@ public class Flooring {
     private BigDecimal laborCost;
     private BigDecimal tax;
     private BigDecimal total;
+    private String dateInfo;
     
     public Flooring(int orderNumber) {
         this.orderNumber = orderNumber;
     }
     
+    public Flooring(String orderDate, String customerName, String state, 
+            String productType, BigDecimal area) {
+        this.dateInfo = orderDate;
+        this.customerName = customerName;
+        this.state = state;
+        this.productType = productType;
+        this.area = area;
+    }
+    
     public int getOrderNumber() {
         return orderNumber;
     }
-    
+
     public String getCustomerName(){
         return customerName;
+    }
+
+    public String getDateInfo() {
+        return dateInfo;
+    }
+
+    public void setDateInfo(String dateInfo) {
+        this.dateInfo = dateInfo;
     }
     
     public void setCustomerName(String customerName){

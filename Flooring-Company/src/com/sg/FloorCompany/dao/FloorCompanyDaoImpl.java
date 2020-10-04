@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,29 +27,44 @@ import java.util.Scanner;
  */
 public class FloorCompanyDaoImpl implements FloorCompanyDao {
 
-    public static final String FLOORING_FILE = "Floor_Inventory.txt";
+    private static LocalDate date = LocalDate.now();
+    public static String dateString = DateTimeFormatter.ofPattern("MMddyyyy").format(date);
+    public static final String FLOORING_FILE = "Orders_" + dateString + "Floor_Inventory.txt";
     public static final String DELIMITER = ",";
-    private Map<String, Flooring> flooring = new HashMap<>();
-
+    private Map<Integer, Flooring> flooring = new HashMap<>();
+    
     @Override
-    public List<Flooring> getAllFlooring() throws FloorCompanyDaoException {
-        loadFloor();
-        return new ArrayList(flooring.values());
+    public List<Flooring> displayAllOrder(String date) throws FloorCompanyDaoException {
+        loadOrder();
+        return new ArrayList<Flooring>(flooring.values());
+        
     }
 
     @Override
-    public Flooring getFloor(String name) throws FloorCompanyDaoException {
-        loadFloor();
-        Flooring floor = flooring.get(name);
-        return floor;
+    public Flooring addOrder(int orderNumber, Flooring floorFile) throws FloorCompanyDaoException {
+        try {
+            loadOrder();
+        } catch(FloorCompanyDaoException e) {
+            
+        }
+        
+        Flooring newOrder = flooring.put(orderNumber, floorFile);
+        date = LocalDate.parse(floorFile.getDateInfo(), DateTimeFormatter.ofPattern("MMddyyyy"));
+        writeOrder();
+        return newOrder;
     }
 
     @Override
-    public Flooring removeFlooring() throws FloorCompanyDaoException {
+    public Flooring editOrder(int orderNumber) throws FloorCompanyDaoException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void loadFloor() throws FloorCompanyDaoException {
+    @Override
+    public Flooring removeOrder(int orderNumber) throws FloorCompanyDaoException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    private void loadOrder() throws FloorCompanyDaoException {
         Scanner sc;
         try {
             sc = new Scanner(
@@ -62,7 +79,8 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         while (sc.hasNextLine()) {
             currentLine = sc.nextLine();
             selectedFloor = unmarshallFloor(currentLine);
-            flooring.put((selectedFloor.getOrderNumber()), selectedFloor); //Incaposlated might cause a problem later on.
+            int selectedFloorStr = selectedFloor.getOrderNumber(); //Changing int into string
+            flooring.put(selectedFloorStr, selectedFloor);
         }
         sc.close();
     }
@@ -101,7 +119,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         return snackFromFile;
     }
     
-    private void writeFloor() throws FloorCompanyDaoException {
+    private void writeOrder() throws FloorCompanyDaoException {
         PrintWriter out;
         try {
             out = new PrintWriter(new FileWriter(FLOORING_FILE));
@@ -117,4 +135,8 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         }
         out.close();
     }
+
+    
+
+    
 }

@@ -5,6 +5,8 @@
  */
 package com.sg.FloorCompany.ui;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Maxka
@@ -30,5 +32,9 @@ public interface UserIO {
     long readLong(String prompt);
 
     long readLong(String prompt, long min, long max);
+    
+    BigDecimal readBigDecimal(String prompt);
+
+    BigDecimal readBigDecimal(String prompt, BigDecimal min, BigDecimal max);
     
 }

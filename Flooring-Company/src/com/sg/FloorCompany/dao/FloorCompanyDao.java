@@ -14,8 +14,11 @@ import java.util.List;
  */
 public interface FloorCompanyDao {
     
-    List<Flooring> getAllFlooring() throws FloorCompanyDaoException;
-    Flooring getFloor(String name) throws FloorCompanyDaoException;
-    Flooring removeFlooring() throws FloorCompanyDaoException;
+//    Flooring getMenuSelection();
+    List<Flooring> displayAllOrder(String date) throws FloorCompanyDaoException;
+    Flooring addOrder(int orderNumber, Flooring flooring) throws FloorCompanyDaoException;
+    Flooring editOrder(int orderNumber) throws FloorCompanyDaoException;
+    Flooring removeOrder(int orderNumber) throws FloorCompanyDaoException;
+    
     
 }

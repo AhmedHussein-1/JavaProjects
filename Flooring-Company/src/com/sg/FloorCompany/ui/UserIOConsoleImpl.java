@@ -5,6 +5,7 @@
  */
 package com.sg.FloorCompany.ui;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
@@ -106,4 +107,24 @@ public class UserIOConsoleImpl implements UserIO {
         return value;
     }
 
+    @Override
+    public BigDecimal readBigDecimal(String prompt) {
+        print(prompt);
+        BigDecimal newBigDecimal = new BigDecimal(sc.nextLine());
+        return newBigDecimal;
+    }
+
+    @Override
+    public BigDecimal readBigDecimal(String prompt, BigDecimal min, BigDecimal max) {
+        BigDecimal value = new BigDecimal("-1");
+        do {
+            print(prompt);
+            value = new BigDecimal(sc.nextLine());
+            if (value.compareTo(min) == -1 || value.compareTo(max) == 1) {
+                print("Error value outside of range!!!");
+            }
+
+        } while (value.compareTo(min) == -1 || value.compareTo(max) == 1);
+        return value;
+    }
 }
