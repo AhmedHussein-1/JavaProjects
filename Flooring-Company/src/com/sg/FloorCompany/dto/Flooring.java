@@ -6,6 +6,7 @@
 package com.sg.FloorCompany.dto;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  *
@@ -42,6 +43,10 @@ public class Flooring {
     
     public int getOrderNumber() {
         return orderNumber;
+    }
+    
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public String getCustomerName(){
@@ -138,6 +143,84 @@ public class Flooring {
     
     public void setTotal(BigDecimal total){
         this.total = total;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.orderNumber;
+        hash = 29 * hash + Objects.hashCode(this.customerName);
+        hash = 29 * hash + Objects.hashCode(this.state);
+        hash = 29 * hash + Objects.hashCode(this.taxRate);
+        hash = 29 * hash + Objects.hashCode(this.productType);
+        hash = 29 * hash + Objects.hashCode(this.area);
+        hash = 29 * hash + Objects.hashCode(this.costPerSquareFoot);
+        hash = 29 * hash + Objects.hashCode(this.laborCostPerSquareFoot);
+        hash = 29 * hash + Objects.hashCode(this.materialCost);
+        hash = 29 * hash + Objects.hashCode(this.laborCost);
+        hash = 29 * hash + Objects.hashCode(this.tax);
+        hash = 29 * hash + Objects.hashCode(this.total);
+        hash = 29 * hash + Objects.hashCode(this.dateInfo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Flooring other = (Flooring) obj;
+        if (this.orderNumber != other.orderNumber) {
+            return false;
+        }
+        if (!Objects.equals(this.customerName, other.customerName)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
+        if (!Objects.equals(this.productType, other.productType)) {
+            return false;
+        }
+        if (!Objects.equals(this.dateInfo, other.dateInfo)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxRate, other.taxRate)) {
+            return false;
+        }
+        if (!Objects.equals(this.area, other.area)) {
+            return false;
+        }
+        if (!Objects.equals(this.costPerSquareFoot, other.costPerSquareFoot)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCostPerSquareFoot, other.laborCostPerSquareFoot)) {
+            return false;
+        }
+        if (!Objects.equals(this.materialCost, other.materialCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCost, other.laborCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.tax, other.tax)) {
+            return false;
+        }
+        if (!Objects.equals(this.total, other.total)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Flooring{" + "orderNumber=" + orderNumber + ", customerName=" + customerName + ", state=" + state + ", taxRate=" + taxRate + ", productType=" + productType + ", area=" + area + ", costPerSquareFoot=" + costPerSquareFoot + ", laborCostPerSquareFoot=" + laborCostPerSquareFoot + ", materialCost=" + materialCost + ", laborCost=" + laborCost + ", tax=" + tax + ", total=" + total + ", dateInfo=" + dateInfo + '}';
     }
 
 
