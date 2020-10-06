@@ -63,7 +63,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
     public Flooring editOrder(int orderNumber) throws FloorCompanyDaoException {
         //1. get user date.
         //2. match user date with file date name.
-        //3. get user OrderNumber.
+        //3. get user OrderNumber..
         return null;
     }
 
