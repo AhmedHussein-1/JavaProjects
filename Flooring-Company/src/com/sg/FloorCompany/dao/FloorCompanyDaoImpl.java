@@ -32,8 +32,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
 
     private static LocalDate date = LocalDate.now();
     public static String dateString = DateTimeFormatter.ofPattern("MMddyyyy").format(date);
-    public static final String FLOORING_FILE = "Orders_" + dateString + "Floor_Inventory.txt";
-    public static File dir = new File("C:\\Users\\Maxka\\Documents\\NetBeansProjects\\Flooring-Company\\Orders", FLOORING_FILE);
+    public static final String FLOORING_FILE = "Orders/Orders_" + dateString + "Floor_Inventory.txt";
     public static final String DELIMITER = ",";
     private Map<Integer, Flooring> flooring = new HashMap<>();
 
@@ -130,7 +129,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
     private void writeOrder() throws FloorCompanyDaoException {
         PrintWriter out;
         try {
-            out = new PrintWriter(new FileWriter(dir));
+            out = new PrintWriter(new FileWriter(FLOORING_FILE));
         } catch (IOException e) {
             throw new FloorCompanyDaoException("Could not save floor data", e);
         }
