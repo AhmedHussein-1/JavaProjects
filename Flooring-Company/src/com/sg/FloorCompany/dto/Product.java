@@ -32,7 +32,7 @@ public class Product {
         return productType;
     }
     
-    public void setproductType(String productType) {
+    public void setProductType(String productType) {
         this.productType = productType;
     }
     

@@ -113,11 +113,11 @@ public class Flooring {
         this.laborCostPerSquareFoot = laborCostPerSquareFoot;
     }
 
-    public BigDecimal getMatericalCost() {
+    public BigDecimal getMaterialCost() {
         return materialCost;
     }
 
-    public void setMaterialCost(BigDecimal materialCost) {
+    public void getMaterialCost(BigDecimal materialCost) {
         this.materialCost = materialCost;
     }
 

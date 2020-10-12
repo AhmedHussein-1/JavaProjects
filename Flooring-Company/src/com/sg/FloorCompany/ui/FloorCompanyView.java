@@ -63,7 +63,7 @@ public class FloorCompanyView {
                     currentOrder.getArea(),
                     currentOrder.getCostPerSquareFoot(),
                     currentOrder.getLaborCostPerSquareFoot(),
-                    currentOrder.getMatericalCost(),
+                    currentOrder.getMaterialCost(),
                     currentOrder.getLaborCost(),
                     currentOrder.getTax(),
                     currentOrder.getTotal());

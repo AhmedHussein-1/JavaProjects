@@ -6,7 +6,11 @@
 package com.sg.FloorCompany.service;
 
 import com.sg.FloorCompany.dao.FloorCompanyDaoException;
+import com.sg.FloorCompany.dao.FloorCompanyProductDaoException;
+import com.sg.FloorCompany.dao.FloorCompanyTaxDaoException;
 import com.sg.FloorCompany.dto.Flooring;
+import com.sg.FloorCompany.dto.Product;
+import com.sg.FloorCompany.dto.Tax;
 import java.util.List;
 
 /**
@@ -15,9 +19,21 @@ import java.util.List;
  */
 public interface FloorCompanyServiceLayer {
     
-    List<Flooring> getAllFlooring() throws FloorCompanyDaoException;
-    void addOrder(Flooring flooring) throws FloorCompanyDaoException;
+    List<Flooring> getAllFlooring(String date) throws FloorCompanyDaoException;
+    Flooring addOrder(int orderNumber,Flooring flooring) throws FloorCompanyDaoException, FloorCompanyTaxDaoException, FloorCompanyProductDaoException;
     Flooring editOrder() throws FloorCompanyDaoException;
     Flooring removeOrder() throws FloorCompanyDaoException;
     Flooring exportAllData() throws FloorCompanyDaoException;
+    
+    
+    Flooring getTaxRate(int orderNumber, Flooring flooring) throws FloorCompanyDaoException, FloorCompanyTaxDaoException;
+    Flooring getCost(int orderNumber, Flooring flooring) throws FloorCompanyDaoException, FloorCompanyProductDaoException;
+    public List<Tax> readTaxFile() throws FloorCompanyTaxDaoException;
+    public List<Product> readProductFile() throws FloorCompanyProductDaoException;
+    
+    Flooring getMaterialCost(int orderNumber, Flooring flooring)throws FloorCompanyDaoException;
+    Flooring getLaborCost(int orderNumber, Flooring flooring)throws FloorCompanyDaoException;
+    Flooring getTaxCost(int orderNumber, Flooring flooring)throws FloorCompanyDaoException;
+    Flooring getTotalCost(int orderNumber, Flooring flooring)throws FloorCompanyDaoException;
 }
+

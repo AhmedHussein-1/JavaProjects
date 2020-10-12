@@ -30,12 +30,24 @@ public class Tax {
         return state;
     }
     
+    public void setState(String state) {
+        this.state = state;
+    }
+    
     public String getStateName() {
         return stateName;
     }
     
-    public BigDecimal taxRate() {
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
+    }
+    
+    public BigDecimal getTaxRate() {
         return taxRate;
+    }
+    
+    public void setTaxRate(BigDecimal taxRate) {
+        this.taxRate = taxRate;
     }
 
 }

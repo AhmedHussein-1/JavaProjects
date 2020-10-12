@@ -101,7 +101,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         floorAsText += aFloor.getArea() + DELIMITER;
         floorAsText += aFloor.getCostPerSquareFoot() + DELIMITER;
         floorAsText += aFloor.getLaborCostPerSquareFoot() + DELIMITER;
-        floorAsText += aFloor.getMatericalCost() + DELIMITER;
+        floorAsText += aFloor.getMaterialCost()+ DELIMITER;
         floorAsText += aFloor.getLaborCost() + DELIMITER;
         floorAsText += aFloor.getTax() + DELIMITER;
         floorAsText += aFloor.getTotal() + DELIMITER;
@@ -119,7 +119,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         snackFromFile.setArea(new BigDecimal(snackTokens[5]));
         snackFromFile.setCostPerSquareFoot(new BigDecimal(snackTokens[6]));
         snackFromFile.setLaborCostPerSquareFoot(new BigDecimal(snackTokens[7]));
-        snackFromFile.setMaterialCost(new BigDecimal(snackTokens[8]));
+        snackFromFile.getMaterialCost(new BigDecimal(snackTokens[8]));
         snackFromFile.setLaborCost(new BigDecimal(snackTokens[9]));
         snackFromFile.setTax(new BigDecimal(snackTokens[10]));
         snackFromFile.setTotal(new BigDecimal(snackTokens[11]));
