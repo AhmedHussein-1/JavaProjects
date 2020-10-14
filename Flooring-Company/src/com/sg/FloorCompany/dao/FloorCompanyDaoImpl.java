@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -40,7 +41,6 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
     public List<Flooring> displayAllOrder(String date) throws FloorCompanyDaoException {
         loadOrder();
         return new ArrayList<Flooring>(flooring.values());
-
     }
 
     @Override
@@ -50,8 +50,16 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         } catch (FloorCompanyDaoException e) {
 
         }
-        Set<Integer> keyset = flooring.keySet();
-        int maxOrderNumber = Collections.max(keyset) + 1;
+        Set<Integer> keyset = null;
+        int maxOrderNumber = 0;
+        try{
+            keyset = flooring.keySet();
+            maxOrderNumber = Collections.max(keyset) + 1;
+            
+        } catch(NoSuchElementException e) {
+            maxOrderNumber = 1;
+        }
+        
         floorFile.setOrderNumber(maxOrderNumber);
         Flooring newOrder = flooring.put(maxOrderNumber, floorFile);
         writeOrder();

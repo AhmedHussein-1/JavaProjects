@@ -7,7 +7,10 @@ package com.sg.FloorCompany.controller;
 
 import com.sg.FloorCompany.dao.FloorCompanyDao;
 import com.sg.FloorCompany.dao.FloorCompanyDaoException;
+import com.sg.FloorCompany.dao.FloorCompanyProductDaoException;
+import com.sg.FloorCompany.dao.FloorCompanyTaxDaoException;
 import com.sg.FloorCompany.dto.Flooring;
+import com.sg.FloorCompany.service.FloorCompanyServiceLayer;
 import com.sg.FloorCompany.ui.FloorCompanyView;
 import java.util.List;
 
@@ -17,15 +20,15 @@ import java.util.List;
  */
 public class FloorCompanyController {
 
-    private FloorCompanyDao dao;
+    private FloorCompanyServiceLayer service;
     private FloorCompanyView view;
 
-    public FloorCompanyController(FloorCompanyDao dao, FloorCompanyView view) {
-        this.dao = dao;
+    public FloorCompanyController(FloorCompanyServiceLayer service, FloorCompanyView view) {
+        this.service = service;
         this.view = view;
     }
 
-    public void run() {
+    public void run() throws FloorCompanyTaxDaoException, FloorCompanyProductDaoException {
         boolean keepGoing = true;
         int menuSelection = 0;
         try {
@@ -62,13 +65,13 @@ public class FloorCompanyController {
 
     private void displayOrders() throws FloorCompanyDaoException {
         String date = view.getDate();
-        List<Flooring> orderList = dao.displayAllOrder(date);
-        view.displayOrderList(orderList);
+//        List<Flooring> orderList = dao.displayAllOrder(date);
+//        view.displayOrderList(orderList);
     }
 
-    private void addOrder() throws FloorCompanyDaoException{
+    private void addOrder() throws FloorCompanyDaoException, FloorCompanyTaxDaoException, FloorCompanyProductDaoException {
         Flooring addTo = view.addNewOrderInfo();
-        dao.addOrder(addTo.getOrderNumber(), addTo);
+        service.addOrder(addTo.getOrderNumber(), addTo);
     }
 
     private void editOrder() {

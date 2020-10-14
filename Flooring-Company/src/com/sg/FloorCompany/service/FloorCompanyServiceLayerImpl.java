@@ -33,7 +33,7 @@ public class FloorCompanyServiceLayerImpl implements FloorCompanyServiceLayer{
     }
     
     public FloorCompanyServiceLayerImpl(FloorCompanyDao dao, 
-            FloorCompanyTaxDao taxDao, FloorCompanyProductDao prodDao) {
+            FloorCompanyTaxDao taxDao, FloorCompanyProductDao prodDao){
         this.dao = dao;
         this.prodDao = prodDao;
         this.taxDao = taxDao;

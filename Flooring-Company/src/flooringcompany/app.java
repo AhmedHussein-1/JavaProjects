@@ -8,6 +8,12 @@ package flooringcompany;
 import com.sg.FloorCompany.controller.FloorCompanyController;
 import com.sg.FloorCompany.dao.FloorCompanyDao;
 import com.sg.FloorCompany.dao.FloorCompanyDaoImpl;
+import com.sg.FloorCompany.dao.FloorCompanyProductDao;
+import com.sg.FloorCompany.dao.FloorCompanyProductDaoImpl;
+import com.sg.FloorCompany.dao.FloorCompanyTaxDao;
+import com.sg.FloorCompany.dao.FloorCompanyTaxDaoImpl;
+import com.sg.FloorCompany.service.FloorCompanyServiceLayer;
+import com.sg.FloorCompany.service.FloorCompanyServiceLayerImpl;
 import com.sg.FloorCompany.ui.FloorCompanyView;
 import com.sg.FloorCompany.ui.UserIO;
 import com.sg.FloorCompany.ui.UserIOConsoleImpl;
@@ -22,7 +28,10 @@ public class app {
         UserIO io = new UserIOConsoleImpl();
         FloorCompanyDao dao = new FloorCompanyDaoImpl();
         FloorCompanyView view = new FloorCompanyView(io);
-        FloorCompanyController controller = new FloorCompanyController(dao, view);
+        FloorCompanyTaxDao taxDao = new FloorCompanyTaxDaoImpl();
+        FloorCompanyProductDao prodDao = new FloorCompanyProductDaoImpl();
+        FloorCompanyServiceLayer service = new FloorCompanyServiceLayerImpl(dao, taxDao, prodDao);
+        FloorCompanyController controller = new FloorCompanyController(service, view);
         controller.run();
     }
 }
