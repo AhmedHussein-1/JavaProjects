@@ -58,8 +58,15 @@ public class FloorCompanyServiceLayerImpl implements FloorCompanyServiceLayer{
     }
 
     @Override
-    public Flooring editOrder() throws FloorCompanyDaoException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Flooring editOrder(int orderNumber, Flooring flooring, String userDate) throws FloorCompanyDaoException, FloorCompanyTaxDaoException, FloorCompanyProductDaoException {
+        Flooring taxInfo = getTaxRate(orderNumber, flooring);
+        Flooring prodInfo = getCost(orderNumber, flooring);
+        Flooring materialCostInfo = getMaterialCost(orderNumber, flooring);
+        Flooring laborCostInfo = getLaborCost(orderNumber, flooring);
+        Flooring taxCostInfo = getTaxCost(orderNumber, flooring);
+        Flooring totalCostInfo = getTotalCost(orderNumber, flooring);
+        Flooring editOrder = dao.editOrder(orderNumber, flooring, userDate);
+        return editOrder;
     }
 
     @Override

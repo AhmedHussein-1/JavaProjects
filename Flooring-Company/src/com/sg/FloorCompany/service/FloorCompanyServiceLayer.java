@@ -21,7 +21,7 @@ public interface FloorCompanyServiceLayer {
     
     List<Flooring> getAllFlooring(String date) throws FloorCompanyDaoException;
     Flooring addOrder(int orderNumber,Flooring flooring) throws FloorCompanyDaoException, FloorCompanyTaxDaoException, FloorCompanyProductDaoException;
-    Flooring editOrder() throws FloorCompanyDaoException;
+    Flooring editOrder(int orderNumber, Flooring flooring, String userDate) throws FloorCompanyDaoException, FloorCompanyTaxDaoException, FloorCompanyProductDaoException;
     Flooring removeOrder() throws FloorCompanyDaoException;
     Flooring exportAllData() throws FloorCompanyDaoException;
     

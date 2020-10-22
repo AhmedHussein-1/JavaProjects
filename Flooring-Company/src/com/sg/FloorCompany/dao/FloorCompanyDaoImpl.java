@@ -33,45 +33,54 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
 
     private static LocalDate date = LocalDate.now();
     public static String dateString = DateTimeFormatter.ofPattern("MMddyyyy").format(date);
-    public static final String FLOORING_FILE = "Orders/Orders_" + dateString + "Floor_Inventory.txt";
+//    public static final String FLOORING_FILE = "Orders/Orders_" + dateString + "Floor_Inventory.txt";
     public static final String DELIMITER = ",";
+    public static String FLOORING_FILE;
     private Map<Integer, Flooring> flooring = new HashMap<>();
 
     @Override
     public List<Flooring> displayAllOrder(String date) throws FloorCompanyDaoException {
-        loadOrder();
+        loadOrder(dateString);
         return new ArrayList<Flooring>(flooring.values());
     }
 
     @Override
     public Flooring addOrder(int orderNumber, Flooring floorFile) throws FloorCompanyDaoException {
         try {
-            loadOrder();
+            loadOrder(dateString);
         } catch (FloorCompanyDaoException e) {
 
         }
         Set<Integer> keyset = null;
         int maxOrderNumber = 0;
-        try{
+        try {
             keyset = flooring.keySet();
             maxOrderNumber = Collections.max(keyset) + 1;
-            
-        } catch(NoSuchElementException e) {
+
+        } catch (NoSuchElementException e) {
             maxOrderNumber = 1;
         }
-        
+
         floorFile.setOrderNumber(maxOrderNumber);
         Flooring newOrder = flooring.put(maxOrderNumber, floorFile);
-        writeOrder();
+        writeOrder(dateString);
         return newOrder;
     }
 
     @Override
-    public Flooring editOrder(int orderNumber) throws FloorCompanyDaoException {
+    public Flooring editOrder(int orderNumber, Flooring flooring, String userDate) throws FloorCompanyDaoException {
         //1. get user date.
         //2. match user date with file date name.
         //3. get user OrderNumber..
-        return null;
+        loadOrder(userDate);
+        if (flooring.containsKey(orderNumber)) {
+            Flooring editOrder = flooring.put(orderNumber, flooring);
+            writeOrder(userDate);
+
+            return editOrder;
+        } else {
+            throw new FloorMasteryDAOException("order does not exist");
+        }
     }
 
     @Override
@@ -79,7 +88,8 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void loadOrder() throws FloorCompanyDaoException {
+    private void loadOrder(String date) throws FloorCompanyDaoException {
+        FLOORING_FILE = ("Orders/Orders_" + dateString + "Floor_Inventory.txt");
         Scanner sc;
         try {
             sc = new Scanner(
@@ -109,7 +119,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         floorAsText += aFloor.getArea() + DELIMITER;
         floorAsText += aFloor.getCostPerSquareFoot() + DELIMITER;
         floorAsText += aFloor.getLaborCostPerSquareFoot() + DELIMITER;
-        floorAsText += aFloor.getMaterialCost()+ DELIMITER;
+        floorAsText += aFloor.getMaterialCost() + DELIMITER;
         floorAsText += aFloor.getLaborCost() + DELIMITER;
         floorAsText += aFloor.getTax() + DELIMITER;
         floorAsText += aFloor.getTotal() + DELIMITER;
@@ -134,7 +144,7 @@ public class FloorCompanyDaoImpl implements FloorCompanyDao {
         return snackFromFile;
     }
 
-    private void writeOrder() throws FloorCompanyDaoException {
+    private void writeOrder(String date) throws FloorCompanyDaoException {
         PrintWriter out;
         try {
             out = new PrintWriter(new FileWriter(FLOORING_FILE));
